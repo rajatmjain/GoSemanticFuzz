@@ -1,10 +1,9 @@
 package main
 
 import (
-	"GoSemanticFuzz/semanticInputGenerator"
-	"fmt"
+	"GoSemanticFuzz/onlineBanking/authentication"
 )
 
 func main(){
-	fmt.Println(semanticInputGenerator.GenerateFloat64(1.0,2.0,3))
+	authentication.CreateUserFromSemanticFuzz()
 }
