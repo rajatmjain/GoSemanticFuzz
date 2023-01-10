@@ -17,8 +17,10 @@ func CreateUserFromSemanticFuzz()(){
 	passwordUnicodeRange := goSemanticFuzz.UnicodeRange{First: '0', Last: 'z',MinLength: 7,MaxLength: 20}
 	passwordFuzzer := goSemanticFuzz.New().Funcs(passwordUnicodeRange.CustomStringFuzzFunc())
 	passwordFuzzer.Fuzz(&password)
-	if(validators.ValidateCredentials(username,password)!=nil){
-		fmt.Println("Username:",username,"\nPassword:",password)
-		return 	
-	}	
+	err := validators.ValidateCredentials(username,password)
+	fmt.Println("Username:",username,"\nPassword:",password)
+	fmt.Println("Error:",err)	
+	if(err==nil){
+		RegisterUser(username,password)
+	}
 }
