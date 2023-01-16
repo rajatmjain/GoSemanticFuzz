@@ -23,4 +23,5 @@ func CreateUserFromSemanticFuzz()(){
 	if(err==nil){
 		RegisterUser(username,password)
 	}
+	fmt.Println("-------------------------------------------------------------")
 }
