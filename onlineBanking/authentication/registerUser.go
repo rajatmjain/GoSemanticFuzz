@@ -28,20 +28,21 @@ func saveAccount(account Account)(error){
 	account.Amount = initialAmount
 	if _, err := os.Stat("onlineBanking/storage/accounts.json"); err == nil {
 		accountsFile, _ := ioutil.ReadFile("onlineBanking/storage/accounts.json")
-		print(accountsFile)
 		if err := json.Unmarshal([]byte(accountsFile), &accounts);err!=nil{
 			return err
 		}
+		print(accounts)
 		accounts = append(accounts, account)
 		_, err := json.Marshal(accounts)
 		if err!=nil{
 			return err
 		}
-		file, _ := json.MarshalIndent(account, "", " ")
+		file, _ := json.MarshalIndent(accounts, "", " ")
 		err = ioutil.WriteFile("onlineBanking/storage/accounts.json", file, 0644)
 		return err
 	 } else {
-		file, _ := json.MarshalIndent(account, "", " ")
+		accounts = append(accounts, account)
+		file, _ := json.MarshalIndent(accounts, "", " ")
 		err := ioutil.WriteFile("onlineBanking/storage/accounts.json", file, 0644)
 		return err
 	}
