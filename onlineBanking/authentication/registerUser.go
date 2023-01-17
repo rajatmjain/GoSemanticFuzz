@@ -4,7 +4,6 @@ import (
 	goSemanticFuzz "GoSemanticFuzz/gofuzz"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 )
 
@@ -27,7 +26,7 @@ func saveAccount(account Account)(error){
 	float64Fuzzer.Fuzz(&initialAmount)
 	account.Amount = initialAmount
 	if _, err := os.Stat("onlineBanking/storage/accounts.json"); err == nil {
-		accountsFile, _ := ioutil.ReadFile("onlineBanking/storage/accounts.json")
+		accountsFile, _ := os.ReadFile("onlineBanking/storage/accounts.json")
 		if err := json.Unmarshal([]byte(accountsFile), &accounts);err!=nil{
 			return err
 		}
@@ -38,12 +37,12 @@ func saveAccount(account Account)(error){
 			return err
 		}
 		file, _ := json.MarshalIndent(accounts, "", " ")
-		err = ioutil.WriteFile("onlineBanking/storage/accounts.json", file, 0644)
+		err = os.WriteFile("onlineBanking/storage/accounts.json", file, 0644)
 		return err
 	 } else {
 		accounts = append(accounts, account)
 		file, _ := json.MarshalIndent(accounts, "", " ")
-		err := ioutil.WriteFile("onlineBanking/storage/accounts.json", file, 0644)
+		err := os.WriteFile("onlineBanking/storage/accounts.json", file, 0644)
 		return err
 	}
 }
