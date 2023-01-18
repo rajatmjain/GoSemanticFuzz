@@ -12,13 +12,10 @@ func RegisterUser(username string, password string)(){
 	float64Schema := goSemanticFuzz.Float64Schema{Minimum: 0,Maximum: 10000,Precision: 2}
 	float64Fuzzer := goSemanticFuzz.New().Funcs(float64Schema.CustomFloat64FuzzFunc())
 	float64Fuzzer.Fuzz(&initialAmount)
-
 	account := Account{
 		Username: username,
-		AccountDetails: Details{
-			Password: password,
-			Amount: initialAmount,
-		},
+		Password: password,
+		Amount: initialAmount,
 	}
 	fmt.Println("Account created for",username,"with initial amount $",initialAmount)
 	if err:=saveInitialAccount(account);err!=nil{
@@ -49,10 +46,6 @@ func saveInitialAccount(account Account)(error){
 }
 type Account struct{
 	Username string `json:"username"`
-	AccountDetails Details `json:"accountDetails"`
-}
-
-type Details struct{
 	Password string `json:"password"`
 	Amount float64 `json:"amount"`
 }

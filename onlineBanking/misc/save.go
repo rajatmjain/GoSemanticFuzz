@@ -16,7 +16,7 @@ func SaveAccount(account authentication.Account)(error){
 		}
 		for index := range(accounts){
 			if(accounts[index].Username==account.Username){
-				
+				accounts[index].Amount = account.Amount
 				return nil
 			}else{
 				return errors.New("Account does not exist")
