@@ -8,29 +8,30 @@ import (
 )
 
 func RegisterUser(username string, password string)(){
-	account := Account{
-		Username: username,
-		Password: password,
-		Amount: 0,
-	}
-	fmt.Println("Account created for",account.Username)
-	if err:=saveAccount(account);err!=nil{
-		fmt.Println("Error:",err)
-	}
-}
-func saveAccount(account Account)(error){
-	var accounts []Account
 	var initialAmount float64
 	float64Schema := goSemanticFuzz.Float64Schema{Minimum: 0,Maximum: 10000,Precision: 2}
 	float64Fuzzer := goSemanticFuzz.New().Funcs(float64Schema.CustomFloat64FuzzFunc())
 	float64Fuzzer.Fuzz(&initialAmount)
-	account.Amount = initialAmount
+
+	account := Account{
+		Username: username,
+		AccountDetails: Details{
+			Password: password,
+			Amount: initialAmount,
+		},
+	}
+	fmt.Println("Account created for",username,"with initial amount $",initialAmount)
+	if err:=saveInitialAccount(account);err!=nil{
+		fmt.Println("Error:",err)
+	}	
+}
+func saveInitialAccount(account Account)(error){
+	var accounts []Account
 	if _, err := os.Stat("onlineBanking/storage/accounts.json"); err == nil {
 		accountsFile, _ := os.ReadFile("onlineBanking/storage/accounts.json")
 		if err := json.Unmarshal([]byte(accountsFile), &accounts);err!=nil{
 			return err
 		}
-		print(accounts)
 		accounts = append(accounts, account)
 		_, err := json.Marshal(accounts)
 		if err!=nil{
@@ -48,6 +49,10 @@ func saveAccount(account Account)(error){
 }
 type Account struct{
 	Username string `json:"username"`
+	AccountDetails Details `json:"accountDetails"`
+}
+
+type Details struct{
 	Password string `json:"password"`
 	Amount float64 `json:"amount"`
 }
