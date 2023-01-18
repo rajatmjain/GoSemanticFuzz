@@ -14,14 +14,20 @@ func SaveAccount(account authentication.Account)(error){
 		if err := json.Unmarshal([]byte(accountsFile), &accounts);err!=nil{
 			return err
 		}
-		for index := range(accounts){
-			if(accounts[index].Username==account.Username){
-				accounts[index].Amount = account.Amount
-				return nil
-			}else{
-				return errors.New("Account does not exist")
+		for index,acc := range accounts{
+			if(acc.Username==account.Username){
+				accounts = append(accounts[:index],accounts[index+1:]...)
+				accounts = append(accounts, account)
+				_, err := json.Marshal(accounts)
+				if err!=nil{
+					return err
+				}
+				file, _ := json.MarshalIndent(accounts, "", " ")
+				err = os.WriteFile("onlineBanking/storage/accounts.json", file, 0644)
+				return err
 			}
 		}
+		return errors.New("account does not exist")
 	}
 	// 	accounts = append(accounts, account)
 	// 	_, err := json.Marshal(accounts)
