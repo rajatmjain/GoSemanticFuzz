@@ -2,14 +2,21 @@ package transactions
 
 import (
 	goSemanticFuzz "GoSemanticFuzz/gofuzz"
-	"GoSemanticFuzz/onlineBanking/authentication"
+	"GoSemanticFuzz/onlineBanking/misc"
 	"fmt"
 )
 
-func Credit(account authentication.Account){
+func Credit(username string){
 	var creditAmount float64
-	float64Schema := goSemanticFuzz.Float64Schema{Minimum: 0,Maximum: 10000,Precision: 9}
+	float64Schema := goSemanticFuzz.Float64Schema{Minimum: 0,Maximum: 10000,Precision: 2}
 	float64Fuzzer := goSemanticFuzz.New().Funcs(float64Schema.CustomFloat64FuzzFunc())
 	float64Fuzzer.Fuzz(&creditAmount)
-	fmt.Println(account.Username,"credits with $",creditAmount) 
+	account := misc.FetchAccount(username)
+	currentAmount := account.Amount
+	newAmount := currentAmount+creditAmount
+	account.Amount = newAmount
+	if  err := misc.SaveAccount(account); err==nil{
+		fmt.Println(username,"credited with $",creditAmount)
+		fmt.Println("New amount:",account.Amount)
+	}	
 }

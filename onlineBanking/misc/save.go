@@ -29,19 +29,5 @@ func SaveAccount(account authentication.Account)(error){
 		}
 		return errors.New("account does not exist")
 	}
-	// 	accounts = append(accounts, account)
-	// 	_, err := json.Marshal(accounts)
-	// 	if err!=nil{
-	// 		return err
-	// 	}
-	// 	file, _ := json.MarshalIndent(accounts, "", " ")
-	// 	err = os.WriteFile("onlineBanking/storage/accounts.json", file, 0644)
-	// 	return err
-	//  } else {
-	// 	accounts = append(accounts, account)
-	// 	file, _ := json.MarshalIndent(accounts, "", " ")
-	// 	err := os.WriteFile("onlineBanking/storage/accounts.json", file, 0644)
-	// 	return err
-	// }
 	return nil
 }
