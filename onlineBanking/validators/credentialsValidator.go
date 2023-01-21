@@ -7,6 +7,9 @@ import (
 
 func ValidateCredentials(username string, password string)(error){
 	// Assertions
+	if(username=="" || password==""){
+		return errors.New("empty username or password")
+	}
 	if(strings.ContainsAny(username[0:1],`"!#$%&'()*+,-./):;<=>?@0123456789`)){
 		return errors.New("invalid username. Username can not start with a special character")
 	}
