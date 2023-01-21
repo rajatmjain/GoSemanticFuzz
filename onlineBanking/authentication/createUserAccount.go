@@ -6,7 +6,6 @@ import (
 	"fmt"
 )
 func CreateUserFromSemanticFuzz()(error){
-	
 	var username string
 	usernameUnicodeRange := goSemanticFuzz.UnicodeRange{First: '0', Last: 'z',MinLength: 2,MaxLength: 16}
 	usernameFuzzer := goSemanticFuzz.New().Funcs(usernameUnicodeRange.CustomStringFuzzFunc())
