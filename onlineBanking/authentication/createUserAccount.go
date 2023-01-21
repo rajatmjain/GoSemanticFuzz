@@ -5,10 +5,8 @@ import (
 	"GoSemanticFuzz/onlineBanking/validators"
 	"fmt"
 )
-func CreateUserFromSemanticFuzz()(){
-	fmt.Println("-------------------------------------------------------------")
-	fmt.Println("Semantic Fuzz creating credentials")
-	fmt.Println("-------------------------------------------------------------")
+func CreateUserFromSemanticFuzz()(error){
+	
 	var username string
 	usernameUnicodeRange := goSemanticFuzz.UnicodeRange{First: '0', Last: 'z',MinLength: 2,MaxLength: 16}
 	usernameFuzzer := goSemanticFuzz.New().Funcs(usernameUnicodeRange.CustomStringFuzzFunc())
@@ -18,10 +16,13 @@ func CreateUserFromSemanticFuzz()(){
 	passwordFuzzer := goSemanticFuzz.New().Funcs(passwordUnicodeRange.CustomStringFuzzFunc())
 	passwordFuzzer.Fuzz(&password)
 	err := validators.ValidateCredentials(username,password)
-	fmt.Println("Username:",username,"\nPassword:",password)
-	fmt.Println("Error:",err)	
-	if(err==nil){
+	if err==nil{
+		fmt.Println("------------------------------------")
+		fmt.Println("CREATING USER")
+		fmt.Println("------------------------------------")
+		fmt.Println("Username:",username,"\nPassword:",password)	
 		RegisterUser(username,password)
+		return err
 	}
-	fmt.Println("-------------------------------------------------------------")
+	return err
 }

@@ -7,9 +7,9 @@ import (
 )
 
 func Transfer(from string, to string){
-	misc.Seperator()
+	misc.Seperator(1)
 	fmt.Println("TRANSFER")
-	misc.Seperator()
+	misc.Seperator(1)
 	fmt.Println("Transfer initiated from",from,"to",to)
 	if(misc.ValidateAccount(from) && misc.ValidateAccount(to)){
 		payerAccount := misc.FetchAccount(from)
@@ -38,6 +38,6 @@ func Transfer(from string, to string){
 	}else{
 		fmt.Println("Can not validate transaction between accounts.")
 	}
-	misc.Seperator()
-	misc.Seperator()	
+	misc.Seperator(1)
+	misc.Seperator(1)	
 }

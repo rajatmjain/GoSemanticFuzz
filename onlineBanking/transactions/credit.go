@@ -7,9 +7,9 @@ import (
 )
 
 func Credit(username string){
-	misc.Seperator()
+	misc.Seperator(1)
 	fmt.Println("CREDIT")
-	misc.Seperator()
+	misc.Seperator(1)
 	var creditAmount float64
 	float64Schema := goSemanticFuzz.Float64Schema{Minimum: 0,Maximum: 10000,Precision: 2}
 	float64Fuzzer := goSemanticFuzz.New().Funcs(float64Schema.CustomFloat64FuzzFunc())
@@ -26,6 +26,6 @@ func Credit(username string){
 		fmt.Println(username,"credited with $",creditAmount)
 		fmt.Println("New amount:",account.Amount)
 	}
-	misc.Seperator()
-	misc.Seperator()	
+	misc.Seperator(1)
+	misc.Seperator(1)	
 }
