@@ -7,10 +7,17 @@ import (
 )
 
 func Credit(username string){
+	misc.Seperator()
+	fmt.Println("CREDIT")
+	misc.Seperator()
 	var creditAmount float64
 	float64Schema := goSemanticFuzz.Float64Schema{Minimum: 0,Maximum: 10000,Precision: 2}
 	float64Fuzzer := goSemanticFuzz.New().Funcs(float64Schema.CustomFloat64FuzzFunc())
 	float64Fuzzer.Fuzz(&creditAmount)
+	// Assertion
+	if (creditAmount>0 && creditAmount<=10000){
+		fmt.Println("Valid credit amount generated")
+	}
 	account := misc.FetchAccount(username)
 	currentAmount := account.Amount
 	newAmount := currentAmount+creditAmount
@@ -18,5 +25,7 @@ func Credit(username string){
 	if  err := misc.SaveAccount(account); err==nil{
 		fmt.Println(username,"credited with $",creditAmount)
 		fmt.Println("New amount:",account.Amount)
-	}	
+	}
+	misc.Seperator()
+	misc.Seperator()	
 }

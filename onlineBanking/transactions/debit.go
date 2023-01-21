@@ -7,6 +7,9 @@ import (
 )
 
 func Debit(username string){
+	misc.Seperator()
+	fmt.Println("DEBIT")
+	misc.Seperator()
 	account := misc.FetchAccount(username)
 	currentAmount := account.Amount
 	var debitAmount float64
@@ -18,5 +21,7 @@ func Debit(username string){
 	if  err := misc.SaveAccount(account); err==nil{
 		fmt.Println(username,"debited with $",debitAmount)
 		fmt.Println("New amount:",account.Amount)
-	}	
+	}
+	misc.Seperator()
+	misc.Seperator()	
 }

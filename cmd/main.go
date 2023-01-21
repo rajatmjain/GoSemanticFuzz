@@ -1,9 +1,7 @@
 package main
 
-import "GoSemanticFuzz/onlineBanking/transactions"
-
 func main(){
-	//authentication.CreateUserFromSemanticFuzz()
-	transactions.Credit("fJZ")
-	//transactions.Debit("fJZ")
+	//transactions.Transfer("tjJ89","gwPu")
+	//transactions.Debit("tjJ89")
+	//transactions.Credit("tjJ89")
 }
