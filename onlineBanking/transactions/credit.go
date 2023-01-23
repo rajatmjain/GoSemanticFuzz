@@ -16,15 +16,16 @@ func Credit(username string){
 	float64Fuzzer.Fuzz(&creditAmount)
 	// Assertion
 	if (creditAmount>0 && creditAmount<=10000){
-		fmt.Println("Valid credit amount generated")
+		fmt.Println("Valid credit amount")
 	}
 	account := misc.FetchAccount(username)
 	currentAmount := account.Amount
+	fmt.Println("Current amount of",account.Username,":",currentAmount)
 	newAmount := currentAmount+creditAmount
 	account.Amount = newAmount
 	if  err := misc.SaveAccount(account); err==nil{
 		fmt.Println(username,"credited with $",creditAmount)
-		fmt.Println("New amount:",account.Amount)
+		fmt.Println("New balance for",account.Username,":",account.Amount)
 	}
 	misc.Seperator(1)
 	misc.Seperator(1)	
