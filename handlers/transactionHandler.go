@@ -11,35 +11,86 @@ import (
 	"os"
 )
 
-func TransactionHandler(numberOfTransactions int){
+func GoSemanticFuzzTransactionHandler(numberOfTransactions int){
 	misc.Seperator(1)
-	fmt.Println("STARTING", numberOfTransactions,"TRANSACTIONS")
+	fmt.Println("STARTING", numberOfTransactions,"TRANSACTIONS(GoSemanticFuzz)")
 	misc.Seperator(1)
-	for i:=0;i<numberOfTransactions;i++{
+	var i int
+	for i=0;i<numberOfTransactions;i++{
 		randomTransactionID := semanticInputGenerator.GenerateInt64(1,4)
 		switch randomTransactionID{
 		case 1:
-			creditHandler()
+			goSemanticFuzzCreditHandler()
 		case 2:
-			debitHandler()
+			goSemanticFuzzDebitHandler()
 		case 3:
-			transferHandler()
+			goSemanticFuzzTransferHandler()
 		default:
+			misc.Seperator(1 )
+			fmt.Println("Invalid transaction option")
+			misc.Seperator(1)
+			colorReset := "\033[0m"
+    		colorRed := "\033[31m"
+			fmt.Print(string(colorRed),"Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
 			return
 		}	
 	}
+	colorReset := "\033[0m"
+    colorRed := "\033[31m"
+	fmt.Print(string(colorRed),"Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
 }
 
-func creditHandler(){
-	transactions.Credit(randomUsername())
+func GoFuzzTransactionHandler(numberOfTransactions int){
+	misc.Seperator(1)
+	fmt.Println("STARTING", numberOfTransactions,"TRANSACTIONS(GoFuzz)")
+	misc.Seperator(1)
+	var i int
+	for i=0;i<numberOfTransactions;i++{
+		randomTransactionID := rand.Int31n(4)
+		switch randomTransactionID{
+		case 1:
+			goFuzzCreditHandler()
+		case 2:
+			goFuzzDebitHandler()
+		case 3:
+			goFuzzTransferHandler()
+		default:
+			misc.Seperator(1 )
+			fmt.Println("Invalid transaction option")
+			misc.Seperator(1)
+			colorReset := "\033[0m"
+    		colorRed := "\033[31m"
+			fmt.Print(string(colorRed),"Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
+			return
+		}	
+	}
+	colorReset := "\033[0m"
+    colorRed := "\033[31m"
+	fmt.Print(string(colorRed),"Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
 }
 
-func debitHandler(){
-	transactions.Debit(randomUsername())
+func goSemanticFuzzCreditHandler(){
+	transactions.GoSemanticFuzzCredit(randomUsername())
 }
 
-func transferHandler(){
-	transactions.Transfer(randomUsername(),randomUsername())
+func goSemanticFuzzDebitHandler(){
+	transactions.GoSemanticFuzzDebit(randomUsername())
+}
+
+func goSemanticFuzzTransferHandler(){
+	transactions.GoSemanticFuzzTransfer(randomUsername(),randomUsername())
+}
+
+func goFuzzCreditHandler(){
+	transactions.GoFuzzCredit(randomUsername())
+}
+
+func goFuzzDebitHandler(){
+	transactions.GoFuzzDebit(randomUsername())
+}
+
+func goFuzzTransferHandler(){
+	transactions.GoFuzzTransfer(randomUsername(),randomUsername())
 }
 
 func randomUsername()(string){
