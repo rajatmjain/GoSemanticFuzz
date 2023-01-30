@@ -2,6 +2,7 @@ package authentication
 
 import (
 	goSemanticFuzz "GoSemanticFuzz/gofuzz"
+	"GoSemanticFuzz/onlineBanking/helpers"
 	"GoSemanticFuzz/onlineBanking/validators"
 	"fmt"
 
@@ -18,13 +19,23 @@ func CreateUserFromGoSemanticFuzz()(error){
 	passwordFuzzer.Fuzz(&password)
 	err := validators.ValidateCredentials(username,password)
 	if err==nil{
-		fmt.Println("------------------------------------")
+		helpers.Seperator(1)
 		fmt.Println("CREATING USER (GoSemanticFuzz)")
-		fmt.Println("------------------------------------")
+		helpers.Seperator(1)
 		fmt.Println("Username:",username,"\nPassword:",password)	
 		RegisterUser(username,password)
+		// Assertion
+		colorGreen := "\033[32m"
+		colorReset := "\033[0m"
+		fmt.Print(string(colorGreen),"Valid account created","\n",string(colorReset))
 		return err
 	}
+	// Assertion
+	colorGreen := "\033[32m"
+	colorReset := "\033[0m"
+	helpers.Seperator(1)
+	fmt.Print(string(colorGreen),"Invalid account created","\n",string(colorReset))
+	helpers.Seperator(1)
 	return err
 }
 
@@ -39,12 +50,24 @@ func CreateUserFromGoFuzz()(error){
 	passwordFuzzer.Fuzz(&password)
 	err := validators.ValidateCredentials(username,password)
 	if err==nil{
-		fmt.Println("------------------------------------")
+		helpers.Seperator(1)
 		fmt.Println("CREATING USER (GoFuzz)")
-		fmt.Println("------------------------------------")
+		helpers.Seperator(1)
 		fmt.Println("Username:",username,"\nPassword:",password)	
 		RegisterUser(username,password)
+		// Assertion
+		helpers.CountAssertions()
+		colorGreen := "\033[32m"
+		colorReset := "\033[0m"
+		fmt.Print(string(colorGreen),"Valid account created","\n",string(colorReset))
 		return err
 	}
+	// Assertion
+	helpers.CountAssertions()
+	colorGreen := "\033[32m"
+	colorReset := "\033[0m"
+	helpers.Seperator(1)
+	fmt.Print(string(colorGreen),"Invalid account created","\n",string(colorReset))
+	helpers.Seperator(1)
 	return err
 }

@@ -2,6 +2,7 @@ package transactions
 
 import (
 	goSemanticFuzz "GoSemanticFuzz/gofuzz"
+	"GoSemanticFuzz/onlineBanking/helpers"
 	"GoSemanticFuzz/onlineBanking/misc"
 	"fmt"
 
@@ -9,9 +10,9 @@ import (
 )
 
 func GoSemanticFuzzDebit(username string){
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	fmt.Println("DEBIT(GoSemanticFuzz)")
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	account := misc.FetchAccount(username)
 	currentAmount := account.Amount
 	var debitAmount float64
@@ -19,8 +20,14 @@ func GoSemanticFuzzDebit(username string){
 	float64Fuzzer := goSemanticFuzz.New().Funcs(float64Schema.CustomFloat64FuzzFunc())
 	float64Fuzzer.Fuzz(&debitAmount)
 	// Assertion
+	colorGreen := "\033[32m"
+	colorReset := "\033[0m"
 	if (debitAmount>0 && debitAmount<=currentAmount){
-		fmt.Println("Valid debit amount")
+		helpers.CountAssertions()
+		fmt.Print(string(colorGreen),"Valid debit amount","\n",colorReset)
+	}else{
+		helpers.CountAssertions()
+		fmt.Print(string(colorGreen),"Invalid debit amount","\n",colorReset)
 	}
 	newAmount := currentAmount-debitAmount
 	account.Amount = newAmount
@@ -29,22 +36,27 @@ func GoSemanticFuzzDebit(username string){
 		fmt.Println(username,"debited with $",debitAmount)
 		fmt.Println("New balance for",account.Username,":",account.Amount)
 	}
-	misc.Seperator(1)
-	misc.Seperator(1)	
+	helpers.Seperator(1)	
 }
 
 func GoFuzzDebit(username string){
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	fmt.Println("DEBIT(GoFuzz)")
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	account := misc.FetchAccount(username)
 	currentAmount := account.Amount
 	var debitAmount float64
 	float64Fuzzer := gofuzz.New()
 	float64Fuzzer.Fuzz(&debitAmount)
 	// Assertion
+	colorGreen := "\033[32m"
+	colorReset := "\033[0m"
 	if (debitAmount>0 && debitAmount<=currentAmount){
-		fmt.Println("Valid debit amount")
+		helpers.CountAssertions()
+		fmt.Print(string(colorGreen),"Valid debit amount","\n",colorReset)
+	}else{
+		helpers.CountAssertions()
+		fmt.Print(string(colorGreen),"Invalid debit amount","\n",colorReset)
 	}
 	newAmount := currentAmount-debitAmount
 	account.Amount = newAmount
@@ -53,6 +65,5 @@ func GoFuzzDebit(username string){
 		fmt.Println(username,"debited with $",debitAmount)
 		fmt.Println("New balance for",account.Username,":",account.Amount)
 	}
-	misc.Seperator(1)
-	misc.Seperator(1)	
+	helpers.Seperator(1)	
 }

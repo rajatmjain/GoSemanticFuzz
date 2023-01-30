@@ -2,6 +2,7 @@ package transactions
 
 import (
 	goSemanticFuzz "GoSemanticFuzz/gofuzz"
+	"GoSemanticFuzz/onlineBanking/helpers"
 	"GoSemanticFuzz/onlineBanking/misc"
 	"fmt"
 
@@ -9,9 +10,9 @@ import (
 )
 
 func GoSemanticFuzzTransfer(from string, to string){
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	fmt.Println("TRANSFER(GoSemanticFuzz)")
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	fmt.Println("Transfer initiated from",from,"to",to)
 	if(misc.ValidateAccount(from) && misc.ValidateAccount(to)){
 		payerAccount := misc.FetchAccount(from)
@@ -25,8 +26,13 @@ func GoSemanticFuzzTransfer(from string, to string){
 		float64Fuzzer := goSemanticFuzz.New().Funcs(float64Schema.CustomFloat64FuzzFunc())
 		float64Fuzzer.Fuzz(&transferAmount)
 		// Assertion
+		colorGreen := "\033[32m"
+		colorReset := "\033[0m"
 		if (transferAmount>0 && transferAmount<=payerAmount){
-			fmt.Println("Valid transfer amount generated")
+			helpers.CountAssertions()
+			fmt.Print(string(colorGreen),"Valid transfer amount generated","\n",string(colorReset))
+		}else{
+			fmt.Print(string(colorGreen),"Invalid transfer amount generated","\n",string(colorReset))
 		}
 		payerAmount -= transferAmount
 		payeeAmount += transferAmount
@@ -40,14 +46,13 @@ func GoSemanticFuzzTransfer(from string, to string){
 	}else{
 		fmt.Println("Can not validate transaction between accounts.")
 	}
-	misc.Seperator(1)
-	misc.Seperator(1)	
+	helpers.Seperator(1)	
 }
 
 func GoFuzzTransfer(from string, to string){
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	fmt.Println("TRANSFER(GoFuzz)")
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	fmt.Println("Transfer initiated from",from,"to",to)
 	if(misc.ValidateAccount(from) && misc.ValidateAccount(to)){
 		payerAccount := misc.FetchAccount(from)
@@ -60,8 +65,14 @@ func GoFuzzTransfer(from string, to string){
 		float64Fuzzer := gofuzz.New()
 		float64Fuzzer.Fuzz(&transferAmount)
 		// Assertion
+		// Assertion
+		colorGreen := "\033[32m"
+		colorReset := "\033[0m"
 		if (transferAmount>0 && transferAmount<=payerAmount){
-			fmt.Println("Valid transfer amount generated")
+			helpers.CountAssertions()
+			fmt.Print(string(colorGreen),"Valid transfer amount generated","\n",string(colorReset))
+		}else{
+			fmt.Print(string(colorGreen),"Invalid transfer amount generated","\n",string(colorReset))
 		}
 		payerAmount -= transferAmount
 		payeeAmount += transferAmount
@@ -75,6 +86,5 @@ func GoFuzzTransfer(from string, to string){
 	}else{
 		fmt.Println("Can not validate transaction between accounts.")
 	}
-	misc.Seperator(1)
-	misc.Seperator(1)	
+	helpers.Seperator(1)	
 }

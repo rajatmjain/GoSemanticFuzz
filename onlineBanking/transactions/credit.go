@@ -2,6 +2,7 @@ package transactions
 
 import (
 	goSemanticFuzz "GoSemanticFuzz/gofuzz"
+	"GoSemanticFuzz/onlineBanking/helpers"
 	"GoSemanticFuzz/onlineBanking/misc"
 	"fmt"
 
@@ -9,16 +10,22 @@ import (
 )
 
 func GoSemanticFuzzCredit(username string){
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	fmt.Println("CREDIT(GoSemanticFuzz)")
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	var creditAmount float64
 	float64Schema := goSemanticFuzz.Float64Schema{Minimum: 0,Maximum: 10000,Precision: 2}
 	float64Fuzzer := goSemanticFuzz.New().Funcs(float64Schema.CustomFloat64FuzzFunc())
 	float64Fuzzer.Fuzz(&creditAmount)
 	// Assertion
+	colorGreen := "\033[32m"
+	colorReset := "\033[0m"
 	if (creditAmount>0 && creditAmount<=10000){
-		fmt.Println("Valid credit amount")
+		helpers.CountAssertions()
+		fmt.Print(string(colorGreen),"Valid credit amount","\n",string(colorReset))
+	}else{
+		helpers.CountAssertions()
+		fmt.Print(string(colorGreen),"Invalid credit amount","\n",string(colorReset))
 	}
 	account := misc.FetchAccount(username)
 	currentAmount := account.Amount
@@ -29,20 +36,25 @@ func GoSemanticFuzzCredit(username string){
 		fmt.Println(username,"credited with $",creditAmount)
 		fmt.Println("New balance for",account.Username,":",account.Amount)
 	}
-	misc.Seperator(1)
-	misc.Seperator(1)	
+		
 }
 
 func GoFuzzCredit(username string){
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	fmt.Println("CREDIT(GoFuzz)")
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	var creditAmount float64
 	float64Fuzzer := gofuzz.New()
 	float64Fuzzer.Fuzz(&creditAmount)
 	// Assertion
+	colorGreen := "\033[32m"
+	colorReset := "\033[0m"
 	if (creditAmount>0 && creditAmount<=10000){
-		fmt.Println("Valid credit amount")
+		helpers.CountAssertions()
+		fmt.Print(string(colorGreen),"Valid credit amount","\n",string(colorReset))
+	}else{
+		helpers.CountAssertions()
+		fmt.Print(string(colorGreen),"Invalid credit amount","\n",string(colorReset))
 	}
 	account := misc.FetchAccount(username)
 	currentAmount := account.Amount
@@ -53,8 +65,7 @@ func GoFuzzCredit(username string){
 		fmt.Println(username,"credited with $",creditAmount)
 		fmt.Println("New balance for",account.Username,":",account.Amount)
 	}
-	misc.Seperator(1)
-	misc.Seperator(1)	
+	
 }
 
 

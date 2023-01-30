@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"GoSemanticFuzz/onlineBanking/authentication"
-	"GoSemanticFuzz/onlineBanking/misc"
+	"GoSemanticFuzz/onlineBanking/helpers"
 	"GoSemanticFuzz/onlineBanking/transactions"
 	"GoSemanticFuzz/semanticInputGenerator"
 	"encoding/json"
@@ -12,9 +12,9 @@ import (
 )
 
 func GoSemanticFuzzTransactionHandler(numberOfTransactions int){
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	fmt.Println("STARTING", numberOfTransactions,"TRANSACTIONS(GoSemanticFuzz)")
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	var i int
 	for i=0;i<numberOfTransactions;i++{
 		randomTransactionID := semanticInputGenerator.GenerateInt64(1,4)
@@ -26,24 +26,26 @@ func GoSemanticFuzzTransactionHandler(numberOfTransactions int){
 		case 3:
 			goSemanticFuzzTransferHandler()
 		default:
-			misc.Seperator(1 )
+			helpers.Seperator(1 )
 			fmt.Println("Invalid transaction option")
-			misc.Seperator(1)
+			helpers.Seperator(1)
 			colorReset := "\033[0m"
     		colorRed := "\033[31m"
 			fmt.Print(string(colorRed),"Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
+			helpers.Seperator(1)
 			return
 		}	
 	}
 	colorReset := "\033[0m"
     colorRed := "\033[31m"
 	fmt.Print(string(colorRed),"Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
+	helpers.Seperator(1)
 }
 
 func GoFuzzTransactionHandler(numberOfTransactions int){
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	fmt.Println("STARTING", numberOfTransactions,"TRANSACTIONS(GoFuzz)")
-	misc.Seperator(1)
+	helpers.Seperator(1)
 	var i int
 	for i=0;i<numberOfTransactions;i++{
 		randomTransactionID := rand.Int31n(4)
@@ -55,18 +57,20 @@ func GoFuzzTransactionHandler(numberOfTransactions int){
 		case 3:
 			goFuzzTransferHandler()
 		default:
-			misc.Seperator(1 )
+			helpers.Seperator(1)
 			fmt.Println("Invalid transaction option")
-			misc.Seperator(1)
+			helpers.Seperator(1)
 			colorReset := "\033[0m"
     		colorRed := "\033[31m"
 			fmt.Print(string(colorRed),"Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
+			helpers.Seperator(1)
 			return
 		}	
 	}
 	colorReset := "\033[0m"
     colorRed := "\033[31m"
 	fmt.Print(string(colorRed),"Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
+	helpers.Seperator(1)
 }
 
 func goSemanticFuzzCreditHandler(){
