@@ -5,11 +5,22 @@ import (
 	"GoSemanticFuzz/onlineBanking/helpers"
 	"GoSemanticFuzz/onlineBanking/misc"
 	"fmt"
+	"log"
+	"os"
 
 	gofuzz "github.com/google/gofuzz"
 )
 
 func GoSemanticFuzzDebit(username string){
+	// Logger
+	file, err := os.OpenFile("result.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer file.Close()
+	logger := log.New(os.Stdout,"Debit/ASSERTION:",log.LstdFlags)
+	logger.SetOutput(file)
+
 	helpers.Seperator(1)
 	fmt.Println("DEBIT(GoSemanticFuzz)")
 	helpers.Seperator(1)
@@ -25,9 +36,11 @@ func GoSemanticFuzzDebit(username string){
 	if (debitAmount>0 && debitAmount<=currentAmount){
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Valid debit amount","\n",colorReset)
+		logger.Println("Valid debit amount")
 	}else{
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Invalid debit amount","\n",colorReset)
+		logger.Println("Invalid debit amount")
 	}
 	newAmount := currentAmount-debitAmount
 	account.Amount = newAmount
@@ -40,6 +53,15 @@ func GoSemanticFuzzDebit(username string){
 }
 
 func GoFuzzDebit(username string){
+	// Logger
+	file, err := os.OpenFile("result.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer file.Close()
+	logger := log.New(os.Stdout,"Credit/ASSERTION:",log.LstdFlags)
+	logger.SetOutput(file)
+
 	helpers.Seperator(1)
 	fmt.Println("DEBIT(GoFuzz)")
 	helpers.Seperator(1)
@@ -54,9 +76,11 @@ func GoFuzzDebit(username string){
 	if (debitAmount>0 && debitAmount<=currentAmount){
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Valid debit amount","\n",colorReset)
+		logger.Println("Valid debit amount")
 	}else{
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Invalid debit amount","\n",colorReset)
+		logger.Println("Invalid debit amount")
 	}
 	newAmount := currentAmount-debitAmount
 	account.Amount = newAmount

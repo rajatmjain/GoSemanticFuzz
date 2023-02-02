@@ -5,11 +5,24 @@ import (
 	"GoSemanticFuzz/onlineBanking/helpers"
 	"GoSemanticFuzz/onlineBanking/misc"
 	"fmt"
+	"log"
+	"os"
 
 	gofuzz "github.com/google/gofuzz"
 )
 
+
+
 func GoSemanticFuzzCredit(username string){
+	// Logger
+	file, err := os.OpenFile("result.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer file.Close()
+	logger := log.New(os.Stdout,"Credit/ASSERTION:",log.LstdFlags)
+	logger.SetOutput(file)
+	
 	helpers.Seperator(1)
 	fmt.Println("CREDIT(GoSemanticFuzz)")
 	helpers.Seperator(1)
@@ -23,9 +36,11 @@ func GoSemanticFuzzCredit(username string){
 	if (creditAmount>0 && creditAmount<=10000){
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Valid credit amount","\n",string(colorReset))
+		logger.Println("Valid credit amount")
 	}else{
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Invalid credit amount","\n",string(colorReset))
+		logger.Println("Invalid credit amount")
 	}
 	account := misc.FetchAccount(username)
 	currentAmount := account.Amount
@@ -40,6 +55,15 @@ func GoSemanticFuzzCredit(username string){
 }
 
 func GoFuzzCredit(username string){
+	// Logger
+	file, err := os.OpenFile("result.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer file.Close()
+	logger := log.New(os.Stdout,"Credit/ASSERTION:",log.LstdFlags)
+	logger.SetOutput(file)
+
 	helpers.Seperator(1)
 	fmt.Println("CREDIT(GoFuzz)")
 	helpers.Seperator(1)
@@ -52,9 +76,11 @@ func GoFuzzCredit(username string){
 	if (creditAmount>0 && creditAmount<=10000){
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Valid credit amount","\n",string(colorReset))
+		logger.Println("Valid credit amount")
 	}else{
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Invalid credit amount","\n",string(colorReset))
+		logger.Println("Invalid credit amount")
 	}
 	account := misc.FetchAccount(username)
 	currentAmount := account.Amount
@@ -64,8 +90,7 @@ func GoFuzzCredit(username string){
 	if  err := misc.SaveAccount(account); err==nil{
 		fmt.Println(username,"credited with $",creditAmount)
 		fmt.Println("New balance for",account.Username,":",account.Amount)
-	}
-	
+	}	
 }
 
 

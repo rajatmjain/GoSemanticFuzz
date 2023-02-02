@@ -5,11 +5,22 @@ import (
 	"GoSemanticFuzz/onlineBanking/helpers"
 	"GoSemanticFuzz/onlineBanking/misc"
 	"fmt"
+	"log"
+	"os"
 
 	gofuzz "github.com/google/gofuzz"
 )
 
 func GoSemanticFuzzTransfer(from string, to string){
+	// Logger
+	file, err := os.OpenFile("result.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer file.Close()
+	logger := log.New(os.Stdout,"Transfer/ASSERTION:",log.LstdFlags)
+	logger.SetOutput(file)
+	
 	helpers.Seperator(1)
 	fmt.Println("TRANSFER(GoSemanticFuzz)")
 	helpers.Seperator(1)
@@ -31,8 +42,10 @@ func GoSemanticFuzzTransfer(from string, to string){
 		if (transferAmount>0 && transferAmount<=payerAmount){
 			helpers.CountAssertions()
 			fmt.Print(string(colorGreen),"Valid transfer amount generated","\n",string(colorReset))
+			logger.Println("Valid transfer amount generated")
 		}else{
 			fmt.Print(string(colorGreen),"Invalid transfer amount generated","\n",string(colorReset))
+			logger.Println("Invalid transfer amount generated")
 		}
 		payerAmount -= transferAmount
 		payeeAmount += transferAmount
@@ -50,6 +63,15 @@ func GoSemanticFuzzTransfer(from string, to string){
 }
 
 func GoFuzzTransfer(from string, to string){
+	// Logger
+	file, err := os.OpenFile("result.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer file.Close()
+	logger := log.New(os.Stdout,"Transfer/ASSERTION:",log.LstdFlags)
+	logger.SetOutput(file)
+
 	helpers.Seperator(1)
 	fmt.Println("TRANSFER(GoFuzz)")
 	helpers.Seperator(1)
@@ -71,8 +93,10 @@ func GoFuzzTransfer(from string, to string){
 		if (transferAmount>0 && transferAmount<=payerAmount){
 			helpers.CountAssertions()
 			fmt.Print(string(colorGreen),"Valid transfer amount generated","\n",string(colorReset))
+			logger.Println("Valid transfer amount generated")
 		}else{
 			fmt.Print(string(colorGreen),"Invalid transfer amount generated","\n",string(colorReset))
+			logger.Println("Invalid transfer amount generated")
 		}
 		payerAmount -= transferAmount
 		payeeAmount += transferAmount
