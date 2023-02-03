@@ -87,7 +87,6 @@ func GoFuzzTransfer(from string, to string){
 		float64Fuzzer := gofuzz.New()
 		float64Fuzzer.Fuzz(&transferAmount)
 		// Assertion
-		// Assertion
 		colorGreen := "\033[32m"
 		colorReset := "\033[0m"
 		if (transferAmount>0 && transferAmount<=payerAmount){
