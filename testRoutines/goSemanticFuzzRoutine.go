@@ -32,24 +32,16 @@ func RunGoSemanticFuzzTestRoutine(){
 	fmt.Print(string(colorBlue),"Number of assertions triggered: ",os.Getenv("count"),"\n",colorReset)
 	logger.Println("Number of assertions triggered: ",os.Getenv("count"))
 
-	// ACCOUNT //
-	handlers.GoSemanticFuzzAccountGenerator(1000)
+	// ACCOUNT EVALUATOR //
+	handlers.GoSemanticFuzzAccountGeneratorEvaluator(10000)
 	helpers.Seperator(1)
 	fmt.Print(string(colorBlue),"Number of assertions triggered: ",os.Getenv("count"),"\n",colorReset)
 	logger.Println("Number of assertions triggered: ",os.Getenv("count"))
 	helpers.Seperator(1)
 	time.Sleep(10*time.Second)
-
-	// ACCOUNT EVALUATOR //
-	handlers.GoSemanticFuzzAccountGeneratorEvaluator(1000)
-	helpers.Seperator(1)
-	fmt.Print(string(colorBlue),"Number of assertions triggered: ",os.Getenv("count"),"\n",colorReset)
-	logger.Println("Number of assertions triggered: ",os.Getenv("count"))
-	helpers.Seperator(1)
 
 	// TRANSACTIONS //
-	time.Sleep(10*time.Second)
-	handlers.GoSemanticFuzzTransactionHandler(10)
+	handlers.GoSemanticFuzzTransactionHandler(10000)
 	helpers.Seperator(1)
 	fmt.Print(string(colorBlue),"Number of assertions triggered: ",os.Getenv("count"),"\n",colorReset)
 	logger.Println("Number of assertions triggered: ",os.Getenv("count"))

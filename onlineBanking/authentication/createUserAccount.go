@@ -17,7 +17,7 @@ func CreateUserFromGoSemanticFuzz()(error){
         log.Fatal(err)
     }
     defer file.Close()
-	logger := log.New(os.Stdout,"Debit/ASSERTION:",log.LstdFlags)
+	logger := log.New(os.Stdout,"Account/ASSERTION:",log.LstdFlags)
 	logger.SetOutput(file)
 	
 	var username string
@@ -32,6 +32,7 @@ func CreateUserFromGoSemanticFuzz()(error){
 	if err==nil{
 		helpers.Seperator(1)
 		fmt.Println("CREATING USER (GoSemanticFuzz)")
+		logger.Println("Valid account created")
 		helpers.Seperator(1)
 		fmt.Println("Username:",username,"\nPassword:",password)	
 		RegisterUser(username,password)
@@ -40,7 +41,6 @@ func CreateUserFromGoSemanticFuzz()(error){
 		colorGreen := "\033[32m"
 		colorReset := "\033[0m"
 		fmt.Print(string(colorGreen),"Valid account created","\n",string(colorReset))
-		logger.Println("Valid account created")
 		return err
 	}
 	// Assertion
@@ -60,7 +60,7 @@ func CreateUserFromGoFuzz()(error){
         log.Fatal(err)
     }
     defer file.Close()
-	logger := log.New(os.Stdout,"Debit/ASSERTION:",log.LstdFlags)
+	logger := log.New(os.Stdout,"Account/ASSERTION:",log.LstdFlags)
 	logger.SetOutput(file)
 
 	var username string
@@ -75,6 +75,7 @@ func CreateUserFromGoFuzz()(error){
 	if err==nil{
 		helpers.Seperator(1)
 		fmt.Println("CREATING USER (GoFuzz)")
+		logger.Println("Valid account created")
 		helpers.Seperator(1)
 		fmt.Println("Username:",username,"\nPassword:",password)	
 		RegisterUser(username,password)
@@ -83,7 +84,6 @@ func CreateUserFromGoFuzz()(error){
 		colorGreen := "\033[32m"
 		colorReset := "\033[0m"
 		fmt.Print(string(colorGreen),"Valid account created","\n",string(colorReset))
-		logger.Println("Valid account created")
 		return err
 	}
 	colorGreen := "\033[32m"
