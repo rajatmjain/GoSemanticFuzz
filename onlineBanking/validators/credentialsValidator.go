@@ -10,6 +10,9 @@ import (
 )
 
 func ValidateCredentials(username string, password string)(error){
+	specialCharacters := `"!#$%&'()*+,-/).:;<=>?[]{}@0123456789`
+	invalidCharacters := `"!#$%&'()*+,-/):<=>?@;\?[]{}`
+
 	file, err := os.OpenFile("result.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
     if err != nil {
         log.Fatal(err)
@@ -30,7 +33,7 @@ func ValidateCredentials(username string, password string)(error){
 		logger.Print("Username and Password not empty\n")
 	}
 
-	if(strings.ContainsAny(username[0:1],`"!#$%&'()*+,-./):;<=>?@0123456789`)){
+	if(strings.ContainsAny(username[0:1],specialCharacters)){
 		fmt.Print(string(colorGreen),"Username starts with special character\n",string(colorReset))
 		logger.Print("Username starts with special character\n")
 		return errors.New("invalid username. Username can not start with an invalid character")
@@ -60,7 +63,7 @@ func ValidateCredentials(username string, password string)(error){
 		logger.Print("Password length valid\n")
 	}
 
-	if(strings.ContainsAny(username,`"!#$%&'()*+,-./):<=>?@;\?`)){
+	if(strings.ContainsAny(username,invalidCharacters)){
 		fmt.Print(string(colorGreen),"Username contains invalid characters\n",string(colorReset))
 		logger.Print("Username contains invalid characters\n")
 		return errors.New("invalid characters in username")
@@ -70,7 +73,7 @@ func ValidateCredentials(username string, password string)(error){
 		logger.Print("Username contains valid characters\n")
 	}
 
-	if(!strings.ContainsAny(password,`"!#$%&'()*+,-./):<=>?@0123456789;`)){
+	if(!strings.ContainsAny(password,specialCharacters)){
 		fmt.Print(string(colorGreen),"Password does not contain required characters\n",string(colorReset))
 		logger.Print("Password does not contain required characters\n")
 		return errors.New("missing compulsory characters in password")

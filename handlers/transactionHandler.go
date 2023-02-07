@@ -137,7 +137,11 @@ func randomUsername()(string){
 		usernames = append(usernames, acc.Username)
 	}
 	if length := len(usernames);length!=0{
-		randomIndex := rand.Int63n(semanticInputGenerator.GenerateInt64(0,int64(length)+1))
+		rando := semanticInputGenerator.GenerateInt64(0,int64(length)+1)
+		if rando==0{
+			rando = 1
+		}
+		randomIndex := rand.Int63n(rando)
 		return usernames[randomIndex]
 	}
 	return ""

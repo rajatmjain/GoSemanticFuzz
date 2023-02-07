@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -35,15 +36,36 @@ func RunGoFuzzTestRoutine(){
 	// ACCOUNT EVALUATOR
 	handlers.GoFuzzAccountGeneratorEvaluator(10000)
 	helpers.Seperator(1)
-	fmt.Print(string(colorBlue),"Number of assertions triggered: ",os.Getenv("count"),"\n",colorReset)
-	logger.Println("Number of assertions triggered: ",os.Getenv("count"))
+	accountEvaluatorAssertions,_ := strconv.Atoi(os.Getenv("count")) 
+	fmt.Print(string(colorBlue),"Number of assertions triggered: ",accountEvaluatorAssertions,"\n",colorReset)
+	logger.Println("Number of assertions triggered in account evaluator: ",accountEvaluatorAssertions)
 	helpers.Seperator(1)
 	time.Sleep(10*time.Second)
 
 	// TRANSACTIONS //
 	handlers.GoFuzzTransactionHandler(10000)
 	helpers.Seperator(1)
-	fmt.Print(string(colorBlue),"Number of assertions triggered: ",os.Getenv("count"),"\n",colorReset)
-	logger.Println("Number of assertions triggered: ",os.Getenv("count"))
+	transactionsAssertions,_ := strconv.Atoi(os.Getenv("count"))
+	transactionsAssertions = transactionsAssertions-accountEvaluatorAssertions
+	fmt.Print(string(colorBlue),"Number of assertions triggered: ",transactionsAssertions,"\n",colorReset)
+	logger.Println("Number of assertions triggered in transactions: ",transactionsAssertions)
+	helpers.Seperator(1)
+
+	// FINAL SUMMARY //
+	helpers.Seperator(1)
+	fmt.Println("GoFuzz Triggered Assertions Summary")
+	helpers.Seperator(1)
+
+	fmt.Print(string(colorBlue),"Number of assertions triggered before starting routine: ",0,"\n",colorReset)
+	logger.Println("Number of assertions triggered before starting routine: ",0)
+
+	fmt.Print(string(colorBlue),"Number of assertions triggered in account evaluator: ",accountEvaluatorAssertions,"\n",colorReset)
+	logger.Println("Number of assertions triggered in account evaluator: ",accountEvaluatorAssertions)
+
+	fmt.Print(string(colorBlue),"Number of assertions triggered in transactions: ",transactionsAssertions,"\n",colorReset)
+	logger.Println("Number of assertions triggered in transactions: ",transactionsAssertions)	
+	
+	fmt.Print(string(colorBlue),"Total number of assertions triggered: ",os.Getenv("count"),"\n",colorReset)
+	logger.Println("Total number of assertions triggered: ",os.Getenv("count"))
 	helpers.Seperator(1)
 }
