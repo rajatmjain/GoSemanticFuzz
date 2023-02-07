@@ -68,4 +68,20 @@ func RunGoSemanticFuzzTestRoutine(){
 	fmt.Print(string(colorBlue),"Total number of assertions triggered: ",os.Getenv("count"),"\n",colorReset)
 	logger.Println("Total number of assertions triggered: ",os.Getenv("count"))
 	helpers.Seperator(1)
+
+	// LOG FILE MANAGEMENT
+	oldLocation := "result.log"
+	newLocation := "logs/goSemanticFuzzResults.log"
+	err = os.Rename(oldLocation, newLocation)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// ACCOUNTS FILE MANAGEMENT //
+	oldLocation = "onlineBanking/storage/accounts.json"
+	newLocation = "onlineBanking/storage/goSemanticFuzzAccounts.json"
+	err = os.Rename(oldLocation, newLocation)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
