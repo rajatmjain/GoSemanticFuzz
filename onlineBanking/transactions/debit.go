@@ -1,7 +1,7 @@
 package transactions
 
 import (
-	goSemanticFuzz "GoSemanticFuzz/gofuzz"
+	goSemanticFuzz "GoSemanticFuzz/gosemanticfuzz"
 	"GoSemanticFuzz/onlineBanking/helpers"
 	"GoSemanticFuzz/onlineBanking/misc"
 	"fmt"

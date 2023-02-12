@@ -25,7 +25,7 @@ import (
 	"strings"
 	"time"
 
-	bytesource "GoSemanticFuzz/gofuzz/bytesource"
+	bytesource "GoSemanticFuzz/gosemanticfuzz/bytesource"
 )
 
 // fuzzFuncMap is a map from a type to a fuzzFunc that handles that type.

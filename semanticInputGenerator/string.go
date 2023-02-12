@@ -1,7 +1,7 @@
 package semanticInputGenerator
 
 import (
-	goSemanticFuzz "GoSemanticFuzz/gofuzz"
+	goSemanticFuzz "GoSemanticFuzz/gosemanticfuzz"
 )
 
 func GenerateString(first rune,last rune,minLength int,maxLength int)(string){

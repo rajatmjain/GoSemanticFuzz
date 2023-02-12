@@ -1,7 +1,7 @@
 package authentication
 
 import (
-	goSemanticFuzz "GoSemanticFuzz/gofuzz"
+	goSemanticFuzz "GoSemanticFuzz/gosemanticfuzz"
 	"GoSemanticFuzz/onlineBanking/helpers"
 	"GoSemanticFuzz/onlineBanking/validators"
 	"fmt"

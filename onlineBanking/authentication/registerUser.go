@@ -1,7 +1,7 @@
 package authentication
 
 import (
-	goSemanticFuzz "GoSemanticFuzz/gofuzz"
+	goSemanticFuzz "GoSemanticFuzz/gosemanticfuzz"
 	"encoding/json"
 	"fmt"
 	"os"

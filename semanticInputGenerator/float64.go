@@ -1,7 +1,7 @@
 package semanticInputGenerator
 
 import (
-	goSemanticFuzz "GoSemanticFuzz/gofuzz"
+	goSemanticFuzz "GoSemanticFuzz/gosemanticfuzz"
 )
 
 func GenerateFloat64(minimum int, maximum int, precision int)(float64){

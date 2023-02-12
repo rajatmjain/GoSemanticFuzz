@@ -1,7 +1,7 @@
 package semanticInputGenerator
 
 import (
-	goSemanticFuzz "GoSemanticFuzz/gofuzz"
+	goSemanticFuzz "GoSemanticFuzz/gosemanticfuzz"
 )
 
 func GenerateInt32(minimum int32,maximum int32)(int32){
