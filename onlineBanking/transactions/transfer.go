@@ -41,11 +41,13 @@ func GoSemanticFuzzTransfer(from string, to string){
 		colorReset := "\033[0m"
 		if (transferAmount>0 && transferAmount<=payerAmount){
 			helpers.CountAssertions()
-			fmt.Print(string(colorGreen),"Valid transfer amount generated","\n",string(colorReset))
-			logger.Println("Valid transfer amount generated")
+			fmt.Print(string(colorGreen),"Valid transfer amount","\n",string(colorReset))
+			logger.Println("Valid transfer amount")
+			logger.Println("Transfer amount:",transferAmount)
 		}else{
-			fmt.Print(string(colorGreen),"Invalid transfer amount generated","\n",string(colorReset))
-			logger.Println("Invalid transfer amount generated")
+			fmt.Print(string(colorGreen),"Invalid transfer amount","\n",string(colorReset))
+			logger.Println("Invalid transfer amount")
+			logger.Println("Transfer amount:",transferAmount)
 		}
 		payerAmount -= transferAmount
 		payeeAmount += transferAmount
@@ -91,11 +93,13 @@ func GoFuzzTransfer(from string, to string){
 		colorReset := "\033[0m"
 		if (transferAmount>0 && transferAmount<=payerAmount){
 			helpers.CountAssertions()
-			fmt.Print(string(colorGreen),"Valid transfer amount generated","\n",string(colorReset))
-			logger.Println("Valid transfer amount generated")
+			fmt.Print(string(colorGreen),"Valid transfer amount","\n",string(colorReset))
+			logger.Println("Valid transfer amount")
+			logger.Println("Transfer amount:",transferAmount)
 		}else{
-			fmt.Print(string(colorGreen),"Invalid transfer amount generated","\n",string(colorReset))
-			logger.Println("Invalid transfer amount generated")
+			fmt.Print(string(colorGreen),"Invalid transfer amount","\n",string(colorReset))
+			logger.Println("Invalid transfer amount")
+			logger.Println("Transfer amount:",transferAmount)
 		}
 		payerAmount -= transferAmount
 		payeeAmount += transferAmount

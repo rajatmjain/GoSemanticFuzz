@@ -27,27 +27,26 @@ func GoSemanticFuzzTransactionHandler(numberOfTransactions int){
 	logger.Println("STARTING", numberOfTransactions,"TRANSACTIONS(GoSemanticFuzz)")
 	helpers.Seperator(1)
 	var i int
+	totalTransactions := 0
 	for i=0;i<numberOfTransactions;i++{
 		randomTransactionID := semanticInputGenerator.GenerateInt64(1,4)
 		switch randomTransactionID{
 		case 1:
 			goSemanticFuzzCreditHandler()
+			totalTransactions += 1
 		case 2:
 			goSemanticFuzzDebitHandler()
+			totalTransactions += 1
 		case 3:
 			goSemanticFuzzTransferHandler()
+			totalTransactions += 1
 		default:
 			helpers.Seperator(1 )
 			fmt.Println("Invalid transaction option")
 			logger.Println("Invalid transaction option")
+			logger.Println("Transaction option:",randomTransactionID)
 			helpers.Seperator(1)
-			colorReset := "\033[0m"
-    		colorRed := "\033[31m"
-			fmt.Print(string(colorRed),"Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
-			logger.Println("Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions")
-			helpers.Seperator(1)
-			return
-		}	
+		}
 	}
 	colorReset := "\033[0m"
     colorRed := "\033[31m"
@@ -71,32 +70,31 @@ func GoFuzzTransactionHandler(numberOfTransactions int){
 	logger.Println("STARTING", numberOfTransactions,"TRANSACTIONS(GoFuzz)")
 	helpers.Seperator(1)
 	var i int
+	totalTransactions := 0
 	for i=0;i<numberOfTransactions;i++{
 		randomTransactionID := rand.Int31n(4)
 		switch randomTransactionID{
 		case 1:
 			goFuzzCreditHandler()
+			totalTransactions += 1
 		case 2:
 			goFuzzDebitHandler()
+			totalTransactions += 1
 		case 3:
 			goFuzzTransferHandler()
+			totalTransactions += 1
 		default:
 			helpers.Seperator(1)
 			fmt.Println("Invalid transaction option")
 			logger.Println("Invalid transaction option")
+			logger.Println("Transaction option:",randomTransactionID)
 			helpers.Seperator(1)
-			colorReset := "\033[0m"
-    		colorRed := "\033[31m"
-			fmt.Print(string(colorRed),"Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
-			logger.Println("Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions")
-			helpers.Seperator(1)
-			return
 		}	
 	}
 	colorReset := "\033[0m"
     colorRed := "\033[31m"
-	fmt.Print(string(colorRed),"Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
-	logger.Println("Total transactions executed successfully: ",i," out of ",numberOfTransactions," transactions")
+	fmt.Print(string(colorRed),"Total transactions executed successfully: ",totalTransactions," out of ",numberOfTransactions," transactions",string(colorReset),"\n")
+	logger.Println("Total transactions executed successfully: ",totalTransactions," out of ",numberOfTransactions," transactions")
 	helpers.Seperator(1)
 }
 

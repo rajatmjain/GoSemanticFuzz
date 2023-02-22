@@ -37,9 +37,11 @@ func GoSemanticFuzzDebit(username string){
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Valid debit amount","\n",colorReset)
 		logger.Println("Valid debit amount")
+		logger.Println("Debit amount:",debitAmount)
 	}else{
 		fmt.Print(string(colorGreen),"Invalid debit amount","\n",colorReset)
 		logger.Println("Invalid debit amount")
+		logger.Println("Debit amount:",debitAmount)
 	}
 	newAmount := currentAmount-debitAmount
 	account.Amount = newAmount
@@ -76,9 +78,11 @@ func GoFuzzDebit(username string){
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Valid debit amount","\n",colorReset)
 		logger.Println("Valid debit amount")
+		logger.Println("Debit amount:",debitAmount)
 	}else{
 		fmt.Print(string(colorGreen),"Invalid debit amount","\n",colorReset)
 		logger.Println("Invalid debit amount")
+		logger.Println("Debit amount:",debitAmount)
 	}
 	newAmount := currentAmount-debitAmount
 	account.Amount = newAmount

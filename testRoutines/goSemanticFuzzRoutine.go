@@ -11,6 +11,9 @@ import (
 )
 
 func RunGoSemanticFuzzTestRoutine(){
+	// START TIMER //
+	start := time.Now()
+
 	// LOGGER //
 	file, err := os.OpenFile("result.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
     if err != nil {
@@ -54,6 +57,7 @@ func RunGoSemanticFuzzTestRoutine(){
 	// FINAL SUMMARY //
 	helpers.Seperator(1)
 	fmt.Println("GoSemanticFuzz Triggered Assertions Summary")
+	logger.Println("GoSemanticFuzz Triggered Assertions Summary")
 	helpers.Seperator(1)
 
 	fmt.Print(string(colorBlue),"Number of assertions triggered before starting routine: ",0,"\n",colorReset)
@@ -67,6 +71,12 @@ func RunGoSemanticFuzzTestRoutine(){
 	
 	fmt.Print(string(colorBlue),"Total number of assertions triggered: ",os.Getenv("count"),"\n",colorReset)
 	logger.Println("Total number of assertions triggered: ",os.Getenv("count"))
+	helpers.Seperator(1)
+
+	// END TIMER //
+	executionTime := time.Since(start)
+	fmt.Println("GSF execution time:",executionTime)
+	logger.Println("GSF execution time:",executionTime)
 	helpers.Seperator(1)
 
 	// LOG FILE MANAGEMENT
@@ -84,4 +94,7 @@ func RunGoSemanticFuzzTestRoutine(){
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	
+
 }

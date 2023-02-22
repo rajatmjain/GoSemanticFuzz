@@ -37,9 +37,11 @@ func GoSemanticFuzzCredit(username string){
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Valid credit amount","\n",string(colorReset))
 		logger.Println("Valid credit amount")
+		logger.Println("Credit amount:",creditAmount)
 	}else{
 		fmt.Print(string(colorGreen),"Invalid credit amount","\n",string(colorReset))
 		logger.Println("Invalid credit amount")
+		logger.Println("Credit amount:",creditAmount)
 	}
 	account := misc.FetchAccount(username)
 	currentAmount := account.Amount
@@ -76,9 +78,11 @@ func GoFuzzCredit(username string){
 		helpers.CountAssertions()
 		fmt.Print(string(colorGreen),"Valid credit amount","\n",string(colorReset))
 		logger.Println("Valid credit amount")
+		logger.Println("Credit amount:",creditAmount)
 	}else{
 		fmt.Print(string(colorGreen),"Invalid credit amount","\n",string(colorReset))
 		logger.Println("Invalid credit amount")
+		logger.Println("Credit amount:",creditAmount)
 	}
 	account := misc.FetchAccount(username)
 	currentAmount := account.Amount
