@@ -39,6 +39,7 @@ func GoSemanticFuzzCredit(username string){
 		logger.Println("Valid credit amount")
 		logger.Println("Credit amount:",creditAmount)
 	}else{
+		helpers.CountBranches()
 		fmt.Print(string(colorGreen),"Invalid credit amount","\n",string(colorReset))
 		logger.Println("Invalid credit amount")
 		logger.Println("Credit amount:",creditAmount)
@@ -80,6 +81,7 @@ func GoFuzzCredit(username string){
 		logger.Println("Valid credit amount")
 		logger.Println("Credit amount:",creditAmount)
 	}else{
+		helpers.CountBranches()
 		fmt.Print(string(colorGreen),"Invalid credit amount","\n",string(colorReset))
 		logger.Println("Invalid credit amount")
 		logger.Println("Credit amount:",creditAmount)

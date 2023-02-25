@@ -45,6 +45,7 @@ func GoSemanticFuzzTransfer(from string, to string){
 			logger.Println("Valid transfer amount")
 			logger.Println("Transfer amount:",transferAmount)
 		}else{
+			helpers.CountBranches()
 			fmt.Print(string(colorGreen),"Invalid transfer amount","\n",string(colorReset))
 			logger.Println("Invalid transfer amount")
 			logger.Println("Transfer amount:",transferAmount)
@@ -97,6 +98,7 @@ func GoFuzzTransfer(from string, to string){
 			logger.Println("Valid transfer amount")
 			logger.Println("Transfer amount:",transferAmount)
 		}else{
+			helpers.CountBranches()
 			fmt.Print(string(colorGreen),"Invalid transfer amount","\n",string(colorReset))
 			logger.Println("Invalid transfer amount")
 			logger.Println("Transfer amount:",transferAmount)

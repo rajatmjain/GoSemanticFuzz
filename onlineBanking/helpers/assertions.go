@@ -6,12 +6,12 @@ import (
 )
 
 func InitAssertionsCount(){
-	os.Setenv("count","0")
+	os.Setenv("assertionCount","0")
 }
 
 func CountAssertions(){
-	currentAssertionCountString,_ := os.LookupEnv("count")
+	currentAssertionCountString,_ := os.LookupEnv("assertionCount")
 	currentAssertionCount,_ := strconv.ParseInt(currentAssertionCountString,10,64)
 	currentAssertionCount += 1
-	os.Setenv("count",strconv.Itoa(int(currentAssertionCount)))
+	os.Setenv("assertionCount",strconv.Itoa(int(currentAssertionCount)))
 }

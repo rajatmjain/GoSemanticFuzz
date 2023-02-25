@@ -24,6 +24,7 @@ func ValidateCredentials(username string, password string)(error){
 	colorGreen := "\033[32m"
 	colorReset := "\033[0m"
 	if(username=="" || password==""){
+		helpers.CountBranches()
 		fmt.Print(string(colorGreen),"Username and Password empty\n",string(colorReset))
 		logger.Print("Username and Password empty\n")
 		return errors.New("empty username or password")
@@ -34,6 +35,7 @@ func ValidateCredentials(username string, password string)(error){
 	}
 
 	if(strings.ContainsAny(username[0:1],specialCharacters)){
+		helpers.CountBranches()
 		fmt.Print(string(colorGreen),"Username starts with special character\n",string(colorReset))
 		logger.Print("Username starts with special character\n")
 		return errors.New("invalid username. Username can not start with an invalid character")
@@ -44,6 +46,7 @@ func ValidateCredentials(username string, password string)(error){
 	}
 
 	if(len(username)<=2 || len(username)>=16){
+		helpers.CountBranches()
 		fmt.Print(string(colorGreen),"Username length invalid\n",string(colorReset))
 		logger.Print("Username length invalid\n")
 		return errors.New("invalid username length. Length should be greater than 2 and less than 16")
@@ -54,6 +57,7 @@ func ValidateCredentials(username string, password string)(error){
 	}
 
 	if(len(password)<6){
+		helpers.CountBranches()
 		fmt.Print(string(colorGreen),"Password length invalid\n",string(colorReset))
 		logger.Print("Password length invalid\n")
 		return errors.New("invalid password length. Length should be greater than 6")
@@ -64,6 +68,7 @@ func ValidateCredentials(username string, password string)(error){
 	}
 
 	if(strings.ContainsAny(username,invalidCharacters)){
+		helpers.CountBranches()
 		fmt.Print(string(colorGreen),"Username contains invalid characters\n",string(colorReset))
 		logger.Print("Username contains invalid characters\n")
 		return errors.New("invalid characters in username")
@@ -74,6 +79,7 @@ func ValidateCredentials(username string, password string)(error){
 	}
 
 	if(!strings.ContainsAny(password,specialCharacters)){
+		helpers.CountBranches()
 		fmt.Print(string(colorGreen),"Password does not contain required characters\n",string(colorReset))
 		logger.Print("Password does not contain required characters\n")
 		return errors.New("missing compulsory characters in password")
@@ -84,6 +90,7 @@ func ValidateCredentials(username string, password string)(error){
 	}
 
 	if(username==password){
+		helpers.CountBranches()
 		fmt.Print(string(colorGreen),"Username and Password can not be same\n",string(colorReset))
 		logger.Print("Username and Password can not be same\n")
 		return errors.New("username and password can not be the same")

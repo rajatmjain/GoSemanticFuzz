@@ -11,6 +11,9 @@ import (
 )
 
 func RunGoSemanticFuzzTestRoutine(){
+	// INIT NUMBER OF ITERATIONS //
+	numberOfIteration := 1
+
 	// START TIMER //
 	start := time.Now()
 
@@ -33,25 +36,37 @@ func RunGoSemanticFuzzTestRoutine(){
 
 	// INIT ASSERTION COUNT
 	helpers.InitAssertionsCount()
-	fmt.Print(string(colorBlue),"Number of assertions triggered: ",os.Getenv("count"),"\n",colorReset)
-	logger.Println("Number of assertions triggered: ",os.Getenv("count"))
+	fmt.Print(string(colorBlue),"Number of assertions triggered: ",os.Getenv("assertionCount"),"\n",colorReset)
+	logger.Println("Number of assertions triggered: ",os.Getenv("assertionCount"))
+
+	// INIT BRANCH COUNT //
+	helpers.InitBranchesCount()
+	fmt.Print(string(colorBlue),"Number of branches explored: ",os.Getenv("branchCount"),"\n",colorReset)
+	logger.Println("Number of branches explored: ",os.Getenv("branchCount"))
 
 	// ACCOUNT EVALUATOR //
-	handlers.GoSemanticFuzzAccountGeneratorEvaluator(10000)
+	handlers.GoSemanticFuzzAccountGeneratorEvaluator(numberOfIteration)
 	helpers.Seperator(1)
-	accountEvaluatorAssertions,_ := strconv.Atoi(os.Getenv("count")) 
+	accountEvaluatorAssertions,_ := strconv.Atoi(os.Getenv("assertionCount")) 
+	accountEvaluatorBranches,_ := strconv.Atoi(os.Getenv("branchCount"))
 	fmt.Print(string(colorBlue),"Number of assertions triggered: ",accountEvaluatorAssertions,"\n",colorReset)
 	logger.Println("Number of assertions triggered in account evaluator: ",accountEvaluatorAssertions)
+	fmt.Print(string(colorBlue),"Number of branches explored: ",accountEvaluatorBranches+accountEvaluatorAssertions,"\n",colorReset)
+	logger.Println("Number of branches explored in account evaluator: ",accountEvaluatorBranches+accountEvaluatorAssertions)
 	helpers.Seperator(1)
 	time.Sleep(10*time.Second)
 
 	// TRANSACTIONS //
-	handlers.GoSemanticFuzzTransactionHandler(10000)
+	handlers.GoSemanticFuzzTransactionHandler(numberOfIteration)
 	helpers.Seperator(1)
-	transactionsAssertions,_ := strconv.Atoi(os.Getenv("count"))
+	transactionsAssertions,_ := strconv.Atoi(os.Getenv("assertionCount"))
+	transactionsBranches,_ := strconv.Atoi(os.Getenv("branchCount"))
 	transactionsAssertions = transactionsAssertions-accountEvaluatorAssertions
+	transactionsBranches = transactionsBranches-accountEvaluatorBranches
 	fmt.Print(string(colorBlue),"Number of assertions triggered: ",transactionsAssertions,"\n",colorReset)
 	logger.Println("Number of assertions triggered in transactions: ",transactionsAssertions)
+	fmt.Print(string(colorBlue),"Number of branches explored: ",transactionsAssertions+transactionsBranches,"\n",colorReset)
+	logger.Println("Number of branches explored in transactions: ",transactionsAssertions+transactionsBranches)
 	helpers.Seperator(1)
 
 	// FINAL SUMMARY //
@@ -60,17 +75,35 @@ func RunGoSemanticFuzzTestRoutine(){
 	logger.Println("GoSemanticFuzz Triggered Assertions Summary")
 	helpers.Seperator(1)
 
+	fmt.Println("Number of iterations:",numberOfIteration)
+	logger.Println("Number of iterations:",numberOfIteration)
+
 	fmt.Print(string(colorBlue),"Number of assertions triggered before starting routine: ",0,"\n",colorReset)
 	logger.Println("Number of assertions triggered before starting routine: ",0)
+
+	fmt.Print(string(colorBlue),"Number of branches explored before starting routine: ",0,"\n",colorReset)
+	logger.Println("Number of branches explored before starting routine: ",0)
 
 	fmt.Print(string(colorBlue),"Number of assertions triggered in account evaluator: ",accountEvaluatorAssertions,"\n",colorReset)
 	logger.Println("Number of assertions triggered in account evaluator: ",accountEvaluatorAssertions)
 
+	fmt.Print(string(colorBlue),"Number of branches explored in account evaluator: ",accountEvaluatorBranches+accountEvaluatorAssertions,"\n",colorReset)
+	logger.Println("Number of branches explored in account evaluator: ",accountEvaluatorBranches+accountEvaluatorAssertions)
+
 	fmt.Print(string(colorBlue),"Number of assertions triggered in transactions: ",transactionsAssertions,"\n",colorReset)
 	logger.Println("Number of assertions triggered in transactions: ",transactionsAssertions)	
 	
-	fmt.Print(string(colorBlue),"Total number of assertions triggered: ",os.Getenv("count"),"\n",colorReset)
-	logger.Println("Total number of assertions triggered: ",os.Getenv("count"))
+	fmt.Print(string(colorBlue),"Number of branches explored in transactions: ",transactionsBranches+transactionsAssertions,"\n",colorReset)
+	logger.Println("Number of branches explored in transactions: ",transactionsBranches+transactionsAssertions)
+
+	fmt.Print(string(colorBlue),"Total number of assertions triggered: ",os.Getenv("assertionCount"),"\n",colorReset)
+	logger.Println("Total number of assertions triggered: ",os.Getenv("assertionCount"))
+	
+	totalAssertions,_ := strconv.Atoi(os.Getenv("assertionCount"))
+	totalBranches,_ := strconv.Atoi(os.Getenv("branchCount"))
+	totalBranches += totalAssertions
+	fmt.Print(string(colorBlue),"Total number of branches explored: ",totalBranches,"\n",colorReset)
+	logger.Println("Total number of branches explored: ",totalBranches)
 	helpers.Seperator(1)
 
 	// END TIMER //
@@ -94,7 +127,4 @@ func RunGoSemanticFuzzTestRoutine(){
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	
-
 }

@@ -43,7 +43,8 @@ func CreateUserFromGoSemanticFuzz()(error){
 		fmt.Print(string(colorGreen),"Valid account created","\n",string(colorReset))
 		return err
 	}
-	// Assertion
+	// Branch
+	helpers.CountBranches()
 	colorGreen := "\033[32m"
 	colorReset := "\033[0m"
 	helpers.Seperator(1)
@@ -86,6 +87,8 @@ func CreateUserFromGoFuzz()(error){
 		fmt.Print(string(colorGreen),"Valid account created","\n",string(colorReset))
 		return err
 	}
+	// Branch
+	helpers.CountBranches()
 	colorGreen := "\033[32m"
 	colorReset := "\033[0m"
 	helpers.Seperator(1)
