@@ -12,7 +12,7 @@ import (
 
 func RunGoSemanticFuzzTestRoutine(){
 	// INIT NUMBER OF ITERATIONS //
-	numberOfIteration := 1
+	numberOfIteration := 80000
 
 	// START TIMER //
 	start := time.Now()
